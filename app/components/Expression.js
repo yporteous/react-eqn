@@ -10,17 +10,19 @@ var Term = React.createClass({
 
 var Expression = React.createClass({
 	render: function () {
-		//*
-		exp = [1,-2,3];
-		var retStr;
-		if (!exp.length) {
+		if (!this.props.terms.length) {
 			return (<p>0</p>);
 		}
 		else {
 			return (
 				<p>
-					{exp.slice(0).reverse().map((coeff, index) => (
-						<span key={index.toString()}> {coeff >= 0 ? "+": "–"} {Math.abs(coeff)===1 ? "" : Math.abs(coeff)}<em>x</em><sup>{exp.length-index}</sup></span>
+					{this.props.terms.slice(0).reverse().map((coeff, index) => (
+						<span key={index.toString()}>
+							{coeff >= 0 ? (index > 0 ? "+" : ""): "–"}
+							{Math.abs(coeff)===1 ? "" : Math.abs(coeff)}
+							<em>x</em>
+							<sup>{this.props.terms.length-index-1}</sup>
+						</span>
 					))}
 				</p>
 			)
