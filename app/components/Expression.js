@@ -4,36 +4,27 @@ var Term = React.createClass({
 	render: function () {
 		let coefficient = 2;
 		let index = 1;
-		return (<p>{coefficient} &times; x <sup>index</sup></p>)
+		return (<p>{coefficient} &times; x <sup>index</sup></p>);
 	}
 })
 
 var Expression = React.createClass({
 	render: function () {
 		//*
-		exp = [];
+		exp = [1,-2,3];
 		var retStr;
 		if (!exp.length) {
-			retStr = (<p>0</p>);
+			return (<p>0</p>);
 		}
 		else {
-			retStr = <p>{exp[0]} + {}</p>;
-			for (var i = 1; i < exp.length; i++) {
-				/*
-				if (exp[i] > 0 && retStr !== 1) {
-					retStr += " + " + (exp[i] + "x^" + i);
-				} else if (exp[i] < 0 && retStr !== -1) {
-					retStr += " – " + (-exp[i] + "x^" + i);
-				}
-				//*/
-				retStr += (" + " + exp[i] + "x<sup>" + i + "</sup>");
-			}
+			return (
+				<p>
+					{exp.slice(0).reverse().map((coeff, index) => (
+						<span key={index.toString()}> {coeff >= 0 ? "+": "–"} {Math.abs(coeff)===1 ? "" : Math.abs(coeff)}<em>x</em><sup>{exp.length-index}</sup></span>
+					))}
+				</p>
+			)
 		}
-		//*/
-		return (
-			retStr
-		)
-		//*/
 	}
 });
 
