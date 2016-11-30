@@ -4,6 +4,6 @@ var ReactDOM = require('react-dom');
 var Expression = require("./components/Expression");
 
 ReactDOM.render(
-	<Expression />,
+	<Expression terms={[1,4,2]} />,
 	document.getElementById('app')
 );
