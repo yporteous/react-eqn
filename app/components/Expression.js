@@ -3,7 +3,7 @@ var React = require('react');
 var Term = React.createClass({
 	render: function () {
 		let coeff = Number(this.props.coefficient);
-		let index = this.props.index;
+		let index = this.props.key;
 		let sign = "+";
 		if (coeff < 0) {
 			sign = "–";
@@ -24,9 +24,9 @@ var Term = React.createClass({
 				break;
 			case 1:
 				if (coefficient === 1) {
-					return (<span key={props.key}>{sign}<em>x</em></span>);
+					return (<span key={this.props.key}>{sign}<em>x</em></span>);
 				} else {
-					return (<span key={props.key}>{sign}{coefficient}<em>x</em></span>);
+					return (<span key={this.props.key}>{sign}{coefficient}<em>x</em></span>);
 				}
 				break;
 			default:
@@ -48,12 +48,7 @@ var Expression = React.createClass({
 			return (
 				<p>
 					{this.props.terms.slice(0).reverse().map((coeff, index) => (
-						<span key={index.toString()}>
-							{coeff >= 0 ? (index > 0 ? "+" : ""): "–"}
-							{Math.abs(coeff)===1 ? "" : Math.abs(coeff)}
-							<em>x</em>
-							<sup>{this.props.terms.length-index-1}</sup>
-						</span>
+						<Term key={index.toString()} coefficient={coeff} />
 					))}
 				</p>
 			)
