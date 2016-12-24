@@ -24,6 +24,34 @@ var rhs = new Side();
 lhs.set([1,2,3]);
 rhs.set([2,1]);
 
+class App extends React.Component {
+	constructor(props) {
+		super(props);
+		this.add = this.add.bind(this);
+	}
+
+	add(index, value, toBoth) {
+		if (toBoth) {
+			this.props.lhs.add(index, value);
+		}
+		this.props.rhs.add(index, value);
+	}
+
+	render() {
+		return (<div>
+			<p>
+				<Expression terms={this.props.lhs.terms}/>
+				<span> = </span>
+				<Expression terms={this.props.rhs.terms}/>
+			</p>
+			<p>
+				<button onClick={this.add(0,1,true)}>+1</button>
+			</p>
+		</div>);
+	}
+}
+
+/*/
 var App = React.createClass({
 	add: function(index, value, toBoth) {
 		if (toBoth) {
@@ -46,7 +74,7 @@ var App = React.createClass({
 		);
 	}
 });
-
+//*/
 
 ReactDOM.render(
 	<App lhs={lhs} rhs={rhs} />,
