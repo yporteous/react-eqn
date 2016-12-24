@@ -24,11 +24,31 @@ var rhs = new Side();
 lhs.set([1,2,3]);
 rhs.set([2,1]);
 
+var App = React.createClass({
+	add: function(index, value, toBoth) {
+		if (toBoth) {
+			this.props.lhs.add(index, value);
+		}
+		this.props.rhs.add(index, value);
+	},
+	render: function() {
+		return (
+			<div>
+				<p>
+					<Expression terms={this.props.lhs.terms}/>
+					<span> = </span>
+					<Expression terms={this.props.rhs.terms}/>
+				</p>
+				<p>
+					<button>+1</button>
+				</p>
+			</div>
+		);
+	}
+});
+
+
 ReactDOM.render(
-	(<p>
-		<Expression terms={lhs.terms}/>
-		<span> = </span>
-		<Expression terms={rhs.terms}/>
-	</p>),
+	<App lhs={lhs} rhs={rhs} />,
 	document.getElementById('app')
 );
