@@ -4,15 +4,15 @@ var Term = React.createClass({
 	render: function () {
 		let coeff = Number(this.props.coefficient);
 		let index = this.props.index;
-		let sign = "+";
+		let sign = " + ";
 		if (this.props.first) {
 			sign = "";
 		}
 		if (coeff < 0) {
-			sign = "–";
+			sign = " – ";
 			coeff *= -1;
 		}
-		if (coeff === 1) {
+		if (coeff === 1 && index) {
 			coeff = "";
 		} else {
 			coeff = coeff.toString();
@@ -56,15 +56,15 @@ var Expression = React.createClass({
 		}
 
 		if (!terms.length) {
-			return (<p>0</p>);
+			return (<span>0</span>);
 		}
 		else {
 			return (
-				<p>
+				<span>
 					{terms.slice(0).reverse().map((coeff, index) => (
 						<Term key={index.toString()} first={!index} index={terms.length-index-1} coefficient={coeff} />
 					))}
-				</p>
+				</span>
 			);
 		}
 	}
