@@ -8,7 +8,7 @@ function Side() {
 }
 
 Side.prototype.add = function (index, value) {
-	while (this.terms.length < index) {
+	while (this.terms.length <= index) {
 		this.terms.push(0);
 	}
 	this.terms[index] += value;
@@ -27,8 +27,10 @@ Side.prototype.set = function (terms) {
 var lhs = new Side();
 var rhs = new Side();
 
-lhs.set([1,2]);
-rhs.set([2,1]);
+lhs.set([1]);
+rhs.set([1]);
+// rhs.add(3,3);
+console.log(rhs.terms);
 
 class App extends React.Component {
 	constructor(props) {
@@ -75,7 +77,15 @@ class App extends React.Component {
 			</p>
 			<p>
 				<button onClick={() => this.add(0,1,true)}>+1</button>
+				<button onClick={() => this.add(0,-1,true)}>–1</button>
+			</p>
+			<p>
+				<button onClick={() => this.add(1,1,true)}>+x</button>
+				<button onClick={() => this.add(1,-1,true)}>–x</button>
+			</p>
+			<p>
 				<button onClick={() => this.scale(2,true)}>&times;2</button>
+				<button onClick={() => this.scale(0.5,true)}>&div;2</button>
 			</p>
 		</div>);
 	}

@@ -5,6 +5,11 @@ var Term = React.createClass({
 		let coeff = Number(this.props.coefficient);
 		let index = this.props.index;
 		let sign = " + ";
+
+		if (coeff === 0 && !this.props.first) {
+			return null;
+		}
+
 		if (this.props.first) {
 			sign = "";
 		}
@@ -19,10 +24,10 @@ var Term = React.createClass({
 		}
 		switch (index) {
 			case 0:
-				if (coeff) {
+				if (coeff !== 0) {
 					return (<span key={index}>{sign}{coeff}</span>);
-				} else {
-					return null;
+				} else if (this.props.first) {
+					return (<span key={index}>0</span>);
 				}
 				break;
 			case 1:
@@ -45,14 +50,9 @@ var Term = React.createClass({
 var Expression = React.createClass({
 	render: function () {
 		let terms = this.props.terms;
-		let last = terms.length - 1;
 
-		if (terms[-1] === 0) {
-			while (terms[last] === 0) {
-				last--;
-			}
-			last++;
-			terms.splice(last, terms.length - last);
+		while (terms[terms.length-1] === 0) {
+			terms.pop()
 		}
 
 		if (!terms.length) {
