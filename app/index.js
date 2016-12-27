@@ -29,20 +29,20 @@ var rhs = new Side();
 
 lhs.set([1]);
 rhs.set([1]);
-// rhs.add(3,3);
-console.log(rhs.terms);
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			lhs: this.props.lhs,
-			rhs: this.props.rhs
+			rhs: this.props.rhs,
+			solve: true
 		};
-		this.add = this.add.bind(this);
+		this.handleToggle = this.handleToggle.bind(this);
+		this.handleSwap = this.handleSwap.bind(this);
 	}
 
-	add(index, value, toBoth) {
+	handleAdd(index, value, toBoth) {
 		var rhs = this.state.rhs;
 		rhs.add(index, value);
 		var lhs = this.state.lhs;
@@ -55,7 +55,7 @@ class App extends React.Component {
 		});
 	}
 
-	scale(factor, toBoth) {
+	handleScale(factor, toBoth) {
 		var rhs = this.state.rhs;
 		rhs.scale(factor);
 		var lhs = this.state.lhs;
@@ -68,24 +68,47 @@ class App extends React.Component {
 		});
 	}
 
+	handleToggle() {
+		this.setState(prevState => ({
+			solve: !prevState.solve
+		}));
+	}
+
+	handleSwap() {
+		this.setState(prevState => ({
+			lhs: prevState.rhs,
+			rhs: prevState.lhs
+		}))
+	}
+
 	render() {
 		return (<div>
 			<p>
-				<Expression terms={this.props.lhs.terms}/>
+				<Expression terms={this.state.lhs.terms}/>
 				<span> = </span>
-				<Expression terms={this.props.rhs.terms}/>
+				<Expression terms={this.state.rhs.terms}/>
 			</p>
 			<p>
-				<button onClick={() => this.add(0,1,true)}>+1</button>
-				<button onClick={() => this.add(0,-1,true)}>–1</button>
+				<button onClick={() => this.handleAdd(0,1,this.state.solve)}>+1</button>
+				<button onClick={() => this.handleAdd(0,-1,this.state.solve)}>–1</button>
 			</p>
 			<p>
-				<button onClick={() => this.add(1,1,true)}>+x</button>
-				<button onClick={() => this.add(1,-1,true)}>–x</button>
+				<button onClick={() => this.handleAdd(1,1,this.state.solve)}>+x</button>
+				<button onClick={() => this.handleAdd(1,-1,this.state.solve)}>–x</button>
 			</p>
 			<p>
-				<button onClick={() => this.scale(2,true)}>&times;2</button>
-				<button onClick={() => this.scale(0.5,true)}>&div;2</button>
+				<button onClick={() => this.handleAdd(2,1,this.state.solve)}>+x<sup>2</sup></button>
+				<button onClick={() => this.handleAdd(2,-1,this.state.solve)}>–x<sup>2</sup></button>
+			</p>
+			<p>
+				<button onClick={() => this.handleScale(2,this.state.solve)}>&times;2</button>
+				<button onClick={() => this.handleScale(0.5,this.state.solve)}>&divide;2</button>
+			</p>
+			<p>
+				<button onClick={this.handleSwap}>Swap sides</button>
+			</p>
+			<p>
+				<button onClick={this.handleToggle}>{this.state.solve ? 'Solve' : 'Set'}</button>
 			</p>
 		</div>);
 	}
