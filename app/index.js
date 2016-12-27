@@ -36,7 +36,9 @@ class App extends React.Component {
 		this.state = {
 			lhs: this.props.lhs,
 			rhs: this.props.rhs,
-			solve: true
+			solve: true,
+			scaleFactor: 2,
+			index: 3
 		};
 		this.handleToggle = this.handleToggle.bind(this);
 		this.handleSwap = this.handleSwap.bind(this);
@@ -78,7 +80,19 @@ class App extends React.Component {
 		this.setState(prevState => ({
 			lhs: prevState.rhs,
 			rhs: prevState.lhs
-		}))
+		}));
+	}
+
+	handleFactor(change) {
+		this.setState(prevState => ({
+			scaleFactor: (prevState.scaleFactor + change <= 0 ? 1 : prevState.scaleFactor + change)
+		}));
+	}
+
+	handleIndex(change) {
+		this.setState(prevState => ({
+			index: (prevState.index + change < 3 ? 3 : prevState.index + change)
+		}));
 	}
 
 	render() {
@@ -101,8 +115,19 @@ class App extends React.Component {
 				<button onClick={() => this.handleAdd(2,-1,this.state.solve)}>–x<sup>2</sup></button>
 			</p>
 			<p>
-				<button onClick={() => this.handleScale(2,this.state.solve)}>&times;2</button>
-				<button onClick={() => this.handleScale(0.5,this.state.solve)}>&divide;2</button>
+				<button onClick={() => this.handleAdd(this.state.index,1,this.state.solve)}>+x<sup>{this.state.index}</sup></button>
+				<button onClick={() => this.handleAdd(this.state.index,-1,this.state.solve)}>–x<sup>{this.state.index}</sup></button>
+				<button onClick={() => this.handleIndex(1)}>+</button>
+				<button onClick={() => this.handleIndex(-1)}>–</button>
+			</p>
+			<p>
+				<button onClick={() => this.handleScale(this.state.scaleFactor,this.state.solve)}>&times;{this.state.scaleFactor}</button>
+				<button onClick={() => this.handleScale(1/this.state.scaleFactor,this.state.solve)}>&divide;{this.state.scaleFactor}</button>
+				<button onClick={() => this.handleFactor(1)}>+</button>
+				<button onClick={() => this.handleFactor(-1)}>–</button>
+			</p>
+			<p>
+				<button onClick={() => this.handleScale(-1,this.state.solve)}>Negate</button>
 			</p>
 			<p>
 				<button onClick={this.handleSwap}>Swap sides</button>
